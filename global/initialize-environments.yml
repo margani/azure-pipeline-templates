@@ -1,0 +1,13 @@
+parameters:
+  - name: list
+    type: string
+
+steps:
+  - checkout: self
+  - checkout: templates
+  - task: PowerShell@2
+    name: vars
+    displayName: Generate environments
+    inputs:
+      filePath: pipeline-templates/global/scripts/initialize-environments.ps1
+      pwsh: true
