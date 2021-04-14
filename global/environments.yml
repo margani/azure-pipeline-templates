@@ -7,6 +7,8 @@ parameters:
     type: object
   - name: nameFormat
     type: string
+  - name: mainProductName
+    type: string
   - name: resourceGroupTypeName
     type: string
     default: 'rg'
@@ -39,3 +41,5 @@ variables:
     value: ${{ parameters.subnetTypeName }}
   - name: envSubscription
     value: $(${{ parameters.env }}-subscription)
+  - name: varMainProductName
+    value: ${{ parameters.mainProductName }}
