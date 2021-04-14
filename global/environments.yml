@@ -37,3 +37,5 @@ variables:
     value: ${{ parameters.vnetTypeName }}
   - name: varSubnetTypeName
     value: ${{ parameters.subnetTypeName }}
+  - name: envSubscription
+    value: $(${{ parameters.env }}-subscription)

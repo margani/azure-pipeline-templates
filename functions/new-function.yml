@@ -1,0 +1,7 @@
+steps:
+  - task: PowerShell@2
+    displayName: New function
+    inputs:
+      filePath: pipeline-templates/functions/scripts/new-function.ps1
+      arguments: -EnvSubscriptions "$(varSubscriptions)" -EnvSubscription $(envSubscription)
+      pwsh: true

@@ -2,7 +2,6 @@ steps:
   - checkout: self
   - checkout: templates
   - task: PowerShell@2
-    name: initialize
     displayName: Initialize Pipeline
     inputs:
       filePath: pipeline-templates/global/scripts/initialize-pipeline.ps1
