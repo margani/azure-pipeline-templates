@@ -1,5 +1,7 @@
 name: 1.0.$(BuildID)-${{ parameters.env }}
 pr: none
+pool:
+  vmImage: ubuntu-latest
 parameters:
   - name: env
     displayName: Environment
