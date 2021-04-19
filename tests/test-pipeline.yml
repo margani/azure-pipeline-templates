@@ -1,0 +1,58 @@
+name: 1.0.$(BuildID)-${{ parameters.env }}
+pr: none
+parameters:
+  - name: env
+    displayName: Environment
+    type: string
+    default: ci
+    values:
+      - ci
+      - t1
+      - t2
+      - t3
+      - a1
+      - a2
+      - p1
+      - p2
+      - p3
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: margani/pipeline-templates
+      endpoint: "margani"
+      ref: refs/heads/poc
+
+variables:
+  - template: global/environments.yml@templates
+    parameters:
+      env: ${{ parameters.env }}
+      org: myorg
+      subscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
+      nameFormat: "{org}-{env}-{product}-{type}"
+      # nameFormat: "{type}-{product}-{env}"
+      mainProductName: Something
+
+stages:
+  - stage: DemoStage1
+    jobs:
+      - job: DemoJob1
+        steps:
+        - template: global/initialize-pipeline.yml@templates
+        - template: functions/new-function.yml@templates
+        - template: functions/new-function.yml@templates
+          parameters:
+            productName: Something else
+        - powershell: gci env:* | sort-object name
+          displayName: Show all environment variables
+  - stage: DemoStage2
+    condition: eq(variables.env, 'ci')
+    dependsOn: DemoStage1
+    jobs:
+      - job: DemoJob2
+        steps:
+        - template: global/initialize-pipeline.yml@templates
+        - template: functions/new-function.yml@templates
+        - powershell: gci env:* | sort-object name
+          displayName: Show all environment variables
