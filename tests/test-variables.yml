@@ -1,0 +1,12 @@
+parameters:
+  - name: variables
+    type: object
+
+steps:
+  - ${{ each variable in parameters.variables }}:
+    - task: PowerShell@2
+      displayName: Test Variable [${{ variable.key }}]
+      inputs:
+        filePath: scripts/test-variables.ps1
+        arguments: -Name "${{ variable.key }}" -Expected "${{ variable.value }}" -Actual "$(${{ variable.key }})"
+        pwsh: true
