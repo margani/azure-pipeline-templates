@@ -1,12 +1,12 @@
 parameters:
-  - name: variables
+  - name: expectations
     type: object
 
 steps:
-  - ${{ each variable in parameters.variables }}:
+  - ${{ each expectation in parameters.expectations }}:
     - task: PowerShell@2
-      displayName: Test Variable [${{ variable.key }}]
+      displayName: Test Variable [${{ expectation.key }}]
       inputs:
         filePath: scripts/test-variables.ps1
-        arguments: -Name "${{ variable.key }}" -Expected "${{ variable.value }}" -Actual "$(${{ variable.key }})"
+        arguments: -Name "${{ expectation.key }}" -Expected "${{ expectation.value }}" -Actual "$(${{ expectation.key }})"
         pwsh: true
