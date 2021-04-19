@@ -33,28 +33,23 @@ variables:
       org: myorg
       subscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
       nameFormat: "{org}-{env}-{product}-{type}"
-      # nameFormat: "{type}-{product}-{env}"
       mainProductName: Something
 
 stages:
-  - stage: DemoStage1
-    jobs:
-      - job: DemoJob1
-        steps:
-        - template: global/initialize-pipeline.yml@templates
-        - template: functions/new-function.yml@templates
-        - template: functions/new-function.yml@templates
-          parameters:
-            productName: Something else
-        - powershell: gci env:* | sort-object name
-          displayName: Show all environment variables
-  - stage: DemoStage2
+  - stage: Stage_For_CI_Only
     condition: eq(variables.env, 'ci')
-    dependsOn: DemoStage1
     jobs:
-      - job: DemoJob2
+      - job: DemoJob
         steps:
-        - template: global/initialize-pipeline.yml@templates
-        - template: functions/new-function.yml@templates
-        - powershell: gci env:* | sort-object name
-          displayName: Show all environment variables
+          - template: global/initialize-pipeline.yml@templates
+          - template: functions/new-function.yml@templates
+          - powershell: gci env:* | sort-object name
+            displayName: Show all environment variables
+  - stage: DemoStage3
+    jobs:
+      - job: DemoJob
+        steps:
+          - template: global/initialize-pipeline.yml@templates
+          - template: functions/new-function.yml@templates
+          - powershell: gci env:* | sort-object name
+            displayName: Show all environment variables
