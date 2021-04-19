@@ -36,6 +36,77 @@ variables:
       mainProductName: Something
 
 stages:
+  - stage: TestEnvironmentsTemplate
+    condition: eq(variables.env, 'ci')
+    jobs:
+      - job: WithInitialValues
+        steps:
+          - template: global/initialize-pipeline.yml@templates
+          - template: test-variables.yml
+            parameters:
+              variables:
+                env: ci
+                varOrg: myorg
+                varSubscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
+                varNameFormat: "{org}-{env}-{product}-{type}"
+                envSubscription: "myorg-devtest-subscription"
+                varMainProductName: "Something"
+                varResourceGroupTypeName: "rg"
+                varFunctionsTypeName: "func"
+                varVnetTypeName: "vnet"
+                varSubnetTypeName: "subnet"
+      - job: LoadWithNoChange
+        variables:
+          - template: global/environments.yml@templates
+            parameters:
+              env: ${{ parameters.env }}
+              org: myorg
+              subscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
+              nameFormat: "{org}-{env}-{product}-{type}"
+              mainProductName: "sampleProduct"
+        steps:
+          - template: global/initialize-pipeline.yml@templates
+          - template: test-variables.yml
+            parameters:
+              variables:
+                env: ci
+                varOrg: myorg
+                varSubscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
+                varNameFormat: "{org}-{env}-{product}-{type}"
+                envSubscription: "myorg-devtest-subscription"
+                varMainProductName: "sampleProduct"
+                varResourceGroupTypeName: "rg"
+                varFunctionsTypeName: "func"
+                varVnetTypeName: "vnet"
+                varSubnetTypeName: "subnet"
+      - job: LoadWithChange
+        variables:
+          - template: global/environments.yml@templates
+            parameters:
+              env: ${{ parameters.env }}
+              org: anotherOrg
+              subscriptions: "ci: my-production-subscription"
+              nameFormat: "{env}-{org}-{env}-{type}-{type}-{product}"
+              mainProductName: "another-product"
+              varResourceGroupTypeName: ""
+              varFunctionsTypeName: "function"
+              varVnetTypeName: "vnetwork"
+              varSubnetTypeName: "subnetwork"
+        steps:
+          - template: global/initialize-pipeline.yml@templates
+          - template: test-variables.yml
+            parameters:
+              variables:
+                env: ci
+                varOrg: anotherOrg
+                varSubscriptions: "ci: my-production-subscription"
+                varNameFormat: "{env}-{org}-{env}-{type}-{type}-{product}"
+                envSubscription: "my-production-subscription"
+                varMainProductName: "another-product"
+                varResourceGroupTypeName: ""
+                varFunctionsTypeName: "function"
+                varVnetTypeName: "vnetwork"
+                varSubnetTypeName: "subnetwork"
   - stage: Stage_For_CI_Only
     condition: eq(variables.env, 'ci')
     jobs:
