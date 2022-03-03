@@ -39,7 +39,7 @@ variables:
 
 stages:
   - stage: DemoStage1
-    condition: succeeded()
+    condition: eq('${{ parameters.env }}', 'ci')
     jobs:
       - job: DemoJob11
         steps:
@@ -83,10 +83,11 @@ stages:
                 varSubnetTypeName: "subnet"
       - job: DemoJob13
         dependsOn: DemoJob12
+        condition: eq('${{ parameters.env }}', 'ci')
         variables:
           - template: global/environments.yml@variables
             parameters:
-              env: ${{ parameters.env }}
+              env: t3
               mainProductName: My Third Demo Product
               resourceGroupTypeName: ""
               functionsTypeName: "function"
@@ -101,8 +102,8 @@ stages:
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
-                env: ci
-                envSubscription: "my-production-subscription"
+                env: t3
+                envSubscription: "my-devtest-subscription"
                 varMainProductName: "My Third Demo Product"
                 varResourceGroupTypeName: ""
                 varFunctionsTypeName: "function"
