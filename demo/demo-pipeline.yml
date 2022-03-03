@@ -42,7 +42,6 @@ stages:
     condition: succeeded()
     jobs:
       - job: DemoJob11
-        condition: succeeded()
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
@@ -63,7 +62,7 @@ stages:
                 varVnetTypeName: "vnet"
                 varSubnetTypeName: "subnet"
       - job: DemoJob12
-        condition: succeeded()
+        dependsOn: DemoJob11
         variables:
           - template: global/environments.yml@variables
             parameters:
@@ -89,7 +88,7 @@ stages:
                 varVnetTypeName: "vnet"
                 varSubnetTypeName: "subnet"
       - job: DemoJob13
-        condition: succeeded()
+        dependsOn: DemoJob12
         variables:
           - template: global/environments.yml@variables
             parameters:
