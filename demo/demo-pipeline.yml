@@ -39,8 +39,10 @@ variables:
 
 stages:
   - stage: DemoStage1
+    condition: succeeded()
     jobs:
       - job: DemoJob11
+        condition: succeeded()
         steps:
           - template: global/initialize-pipeline.yml@variables
           - template: tests/test-variables.yml@templates
@@ -57,6 +59,7 @@ stages:
                 varVnetTypeName: "vnet"
                 varSubnetTypeName: "subnet"
       - job: DemoJob12
+        condition: succeeded()
         variables:
           - template: global/environments.yml@variables
             parameters:
@@ -78,6 +81,7 @@ stages:
                 varVnetTypeName: "vnet"
                 varSubnetTypeName: "subnet"
       - job: DemoJob13
+        condition: succeeded()
         variables:
           - template: global/environments.yml@variables
             parameters:
@@ -103,8 +107,10 @@ stages:
                 varVnetTypeName: "vnetwork"
                 varSubnetTypeName: "subnetwork"
   - stage: DemoStage2
+    condition: succeeded()
     jobs:
       - job: DemoJob21
+        condition: succeeded()
         steps:
           - template: global/initialize-pipeline.yml@variables
           - template: functions/new-function.yml@templates
