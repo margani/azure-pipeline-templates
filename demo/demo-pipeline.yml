@@ -43,7 +43,7 @@ stages:
       - job: DemoJob11
         steps:
           - template: global/initialize-pipeline.yml@variables
-          - template: test-variables.yml
+          - template: tests/test-variables.yml@templates
             parameters:
               expectations:
                 env: ci
@@ -64,7 +64,7 @@ stages:
               mainProductName: My Second Demo Product
         steps:
           - template: global/initialize-pipeline.yml@variables
-          - template: test-variables.yml
+          - template: tests/test-variables.yml@templates
             parameters:
               expectations:
                 env: ci
@@ -89,7 +89,7 @@ stages:
               varSubnetTypeName: "subnetwork"
         steps:
           - template: global/initialize-pipeline.yml@variables
-          - template: test-variables.yml
+          - template: tests/test-variables.yml@templates
             parameters:
               expectations:
                 env: ci
@@ -108,4 +108,4 @@ stages:
         steps:
           - template: global/initialize-pipeline.yml@variables
           - template: functions/new-function.yml@templates
-          - template: tests/display-env.yml
+          - template: tests/display-env.yml@templates
