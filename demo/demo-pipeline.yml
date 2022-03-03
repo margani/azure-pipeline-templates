@@ -103,7 +103,7 @@ stages:
             parameters:
               expectations:
                 env: t3
-                envSubscription: "my-devtest-subscription"
+                envSubscription: "myorg-devtest-subscription"
                 varMainProductName: "My Third Demo Product"
                 varResourceGroupTypeName: ""
                 varFunctionsTypeName: "function"
