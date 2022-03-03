@@ -52,7 +52,6 @@ stages:
             parameters:
               expectations:
                 env: ci
-                varOrg: myorg
                 varSubscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
                 varNameFormat: "{org}-{env}-{product}-{type}"
                 envSubscription: "myorg-devtest-subscription"
@@ -78,7 +77,6 @@ stages:
             parameters:
               expectations:
                 env: a1
-                varOrg: myorg
                 varSubscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
                 varNameFormat: "{org}-{env}-{product}-{type}"
                 envSubscription: "myorg-production-subscription"
@@ -108,7 +106,6 @@ stages:
             parameters:
               expectations:
                 env: ci
-                varOrg: anotherOrg
                 varSubscriptions: "ci: my-production-subscription"
                 varNameFormat: "{env}-{org}-{env}-{type}-{type}-{product}"
                 envSubscription: "my-production-subscription"
