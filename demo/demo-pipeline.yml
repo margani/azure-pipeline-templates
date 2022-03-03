@@ -83,10 +83,10 @@ stages:
             parameters:
               env: ${{ parameters.env }}
               mainProductName: My Third Demo Product
-              varResourceGroupTypeName: ""
-              varFunctionsTypeName: "function"
-              varVnetTypeName: "vnetwork"
-              varSubnetTypeName: "subnetwork"
+              resourceGroupTypeName: ""
+              functionsTypeName: "function"
+              vnetTypeName: "vnetwork"
+              subnetTypeName: "subnetwork"
         steps:
           - template: global/initialize-pipeline.yml@variables
           - template: tests/test-variables.yml@templates
