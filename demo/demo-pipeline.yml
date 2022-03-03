@@ -56,7 +56,7 @@ stages:
                 varSubscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
                 varNameFormat: "{org}-{env}-{product}-{type}"
                 envSubscription: "myorg-devtest-subscription"
-                varMainProductName: "Something"
+                varMainProductName: "My First Demo Product"
                 varResourceGroupTypeName: "rg"
                 varFunctionsTypeName: "func"
                 varVnetTypeName: "vnet"
@@ -77,12 +77,12 @@ stages:
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
-                env: ci
+                env: a1
                 varOrg: myorg
                 varSubscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
                 varNameFormat: "{org}-{env}-{product}-{type}"
-                envSubscription: "myorg-devtest-subscription"
-                varMainProductName: "sampleProduct"
+                envSubscription: "myorg-production-subscription"
+                varMainProductName: "My Second Demo Product"
                 varResourceGroupTypeName: "rg"
                 varFunctionsTypeName: "func"
                 varVnetTypeName: "vnet"
@@ -112,7 +112,7 @@ stages:
                 varSubscriptions: "ci: my-production-subscription"
                 varNameFormat: "{env}-{org}-{env}-{type}-{type}-{product}"
                 envSubscription: "my-production-subscription"
-                varMainProductName: "another-product"
+                varMainProductName: "My Third Demo Product"
                 varResourceGroupTypeName: ""
                 varFunctionsTypeName: "function"
                 varVnetTypeName: "vnetwork"
