@@ -48,6 +48,7 @@ stages:
           - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
+          - template: functions/new-function.yml@templates
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
@@ -71,6 +72,7 @@ stages:
           - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
+          - template: functions/new-function.yml@templates
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
@@ -91,6 +93,7 @@ stages:
           - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
+          - template: functions/new-function.yml@templates
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
