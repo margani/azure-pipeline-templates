@@ -1,0 +1,3 @@
+steps:
+  - powershell: gci -recurse
+    displayName: Show all files

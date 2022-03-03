@@ -44,6 +44,8 @@ stages:
       - job: DemoJob11
         condition: succeeded()
         steps:
+          - template: tests/display-env.yml@templates
+          - template: tests/display-files.yml@templates
           - template: global/initialize-pipeline.yml@variables
           - template: tests/test-variables.yml@templates
             parameters:
@@ -66,6 +68,8 @@ stages:
               env: a1
               mainProductName: My Second Demo Product
         steps:
+          - template: tests/display-env.yml@templates
+          - template: tests/display-files.yml@templates
           - template: global/initialize-pipeline.yml@variables
           - template: tests/test-variables.yml@templates
             parameters:
@@ -92,6 +96,8 @@ stages:
               vnetTypeName: "vnetwork"
               subnetTypeName: "subnetwork"
         steps:
+          - template: tests/display-env.yml@templates
+          - template: tests/display-files.yml@templates
           - template: global/initialize-pipeline.yml@variables
           - template: tests/test-variables.yml@templates
             parameters:
@@ -112,6 +118,8 @@ stages:
       - job: DemoJob21
         condition: succeeded()
         steps:
+          - template: tests/display-env.yml@templates
+          - template: tests/display-files.yml@templates
           - template: global/initialize-pipeline.yml@variables
           - template: functions/new-function.yml@templates
           - template: tests/display-env.yml@templates
