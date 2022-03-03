@@ -32,10 +32,10 @@ resources:
       ref: refs/heads/poc
 
 variables:
-  - template: global/environments.yml@variables
+  - template: global/naming.yml@variables
     parameters:
       env: ${{ parameters.env }}
-      mainProductName: My First Demo Product
+      productName: My First Demo Product
 
 stages:
   - stage: DemoStage1
@@ -45,15 +45,15 @@ stages:
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: global/initialize-pipeline.yml@variables
+          - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
                 env: ci
+                productName: "My First Demo Product"
                 envSubscription: "myorg-devtest-subscription"
-                varMainProductName: "My First Demo Product"
                 varResourceGroupTypeName: "rg"
                 varFunctionsTypeName: "func"
                 varVnetTypeName: "vnet"
@@ -61,54 +61,42 @@ stages:
       - job: DemoJob12
         dependsOn: DemoJob11
         variables:
-          - template: global/environments.yml@variables
+          - template: global/naming.yml@variables
             parameters:
               env: a1
-              mainProductName: My Second Demo Product
+              productName: My Second Demo Product
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: global/initialize-pipeline.yml@variables
+          - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
                 env: a1
+                productName: "My Second Demo Product"
                 envSubscription: "myorg-production-subscription"
-                varMainProductName: "My Second Demo Product"
-                varResourceGroupTypeName: "rg"
-                varFunctionsTypeName: "func"
-                varVnetTypeName: "vnet"
-                varSubnetTypeName: "subnet"
       - job: DemoJob13
         dependsOn: DemoJob12
         condition: eq('${{ parameters.env }}', 'ci')
         variables:
-          - template: global/environments.yml@variables
+          - template: global/naming.yml@variables
             parameters:
               env: t3
-              mainProductName: My Third Demo Product
-              resourceGroupTypeName: ""
-              functionsTypeName: "function"
-              vnetTypeName: "vnetwork"
-              subnetTypeName: "subnetwork"
+              productName: My Third Demo Product
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: global/initialize-pipeline.yml@variables
+          - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: tests/test-variables.yml@templates
             parameters:
               expectations:
                 env: t3
+                productName: "My Third Demo Product"
                 envSubscription: "myorg-devtest-subscription"
-                varMainProductName: "My Third Demo Product"
-                varResourceGroupTypeName: ""
-                varFunctionsTypeName: "function"
-                varVnetTypeName: "vnetwork"
-                varSubnetTypeName: "subnetwork"
   - stage: DemoStage2
     condition: succeeded()
     jobs:
@@ -117,7 +105,7 @@ stages:
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: global/initialize-pipeline.yml@variables
+          - template: ../pipeline/initialize-pipeline.yml
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: functions/new-function.yml@templates
