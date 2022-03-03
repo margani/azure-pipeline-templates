@@ -1,8 +1,3 @@
-parameters:
-  - name: productName
-    type: string
-    default: $(varMainProductName)
-
 steps:
   - task: PowerShell@2
     displayName: New function
@@ -10,5 +5,5 @@ steps:
       filePath: azure-pipeline-templates/functions/scripts/new-function.ps1
       arguments: -EnvSubscriptions "$(varSubscriptions)"
         -EnvSubscription $(envSubscription)
-        -Product "${{ parameters.productName }}"
+        -Product "$(productName)"
       pwsh: true
