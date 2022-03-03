@@ -22,26 +22,27 @@ resources:
   repositories:
     - repository: templates
       type: github
-      name: margani/pipeline-templates
-      endpoint: "margani"
+      name: margani/azure-pipeline-templates
+      endpoint: margani
+      ref: refs/heads/poc
+    - repository: variables
+      type: github
+      name: margani/azure-pipeline-variables
+      endpoint: margani
       ref: refs/heads/poc
 
 variables:
-  - template: global/environments.yml@templates
+  - template: global/environments.yml@variables
     parameters:
       env: ${{ parameters.env }}
-      org: myorg
-      subscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
-      nameFormat: "{org}-{env}-{product}-{type}"
-      mainProductName: Something
+      mainProductName: My First Demo Product
 
 stages:
-  - stage: TestEnvironmentsTemplate
-    condition: eq(variables.env, 'ci')
+  - stage: DemoStage1
     jobs:
-      - job: WithInitialValues
+      - job: DemoJob11
         steps:
-          - template: global/initialize-pipeline.yml@templates
+          - template: global/initialize-pipeline.yml@variables
           - template: test-variables.yml
             parameters:
               expectations:
@@ -55,17 +56,14 @@ stages:
                 varFunctionsTypeName: "func"
                 varVnetTypeName: "vnet"
                 varSubnetTypeName: "subnet"
-      - job: LoadWithNoChange
+      - job: DemoJob12
         variables:
-          - template: global/environments.yml@templates
+          - template: global/environments.yml@variables
             parameters:
-              env: ${{ parameters.env }}
-              org: myorg
-              subscriptions: "ci, t1, t2, t3: myorg-devtest-subscription; a1, a2, p1, p2, p3: myorg-production-subscription"
-              nameFormat: "{org}-{env}-{product}-{type}"
-              mainProductName: "sampleProduct"
+              env: a1
+              mainProductName: My Second Demo Product
         steps:
-          - template: global/initialize-pipeline.yml@templates
+          - template: global/initialize-pipeline.yml@variables
           - template: test-variables.yml
             parameters:
               expectations:
@@ -79,21 +77,18 @@ stages:
                 varFunctionsTypeName: "func"
                 varVnetTypeName: "vnet"
                 varSubnetTypeName: "subnet"
-      - job: LoadWithChange
+      - job: DemoJob13
         variables:
-          - template: global/environments.yml@templates
+          - template: global/environments.yml@variables
             parameters:
               env: ${{ parameters.env }}
-              org: anotherOrg
-              subscriptions: "ci: my-production-subscription"
-              nameFormat: "{env}-{org}-{env}-{type}-{type}-{product}"
-              mainProductName: "another-product"
+              mainProductName: My Third Demo Product
               varResourceGroupTypeName: ""
               varFunctionsTypeName: "function"
               varVnetTypeName: "vnetwork"
               varSubnetTypeName: "subnetwork"
         steps:
-          - template: global/initialize-pipeline.yml@templates
+          - template: global/initialize-pipeline.yml@variables
           - template: test-variables.yml
             parameters:
               expectations:
@@ -107,20 +102,10 @@ stages:
                 varFunctionsTypeName: "function"
                 varVnetTypeName: "vnetwork"
                 varSubnetTypeName: "subnetwork"
-  - stage: Stage_For_CI_Only
-    condition: eq(variables.env, 'ci')
+  - stage: DemoStage2
     jobs:
-      - job: DemoJob
+      - job: DemoJob21
         steps:
-          - template: global/initialize-pipeline.yml@templates
+          - template: global/initialize-pipeline.yml@variables
           - template: functions/new-function.yml@templates
-          - powershell: gci env:* | sort-object name
-            displayName: Show all environment variables
-  - stage: DemoStage3
-    jobs:
-      - job: DemoJob
-        steps:
-          - template: global/initialize-pipeline.yml@templates
-          - template: functions/new-function.yml@templates
-          - powershell: gci env:* | sort-object name
-            displayName: Show all environment variables
+          - template: tests/display-env.yml
