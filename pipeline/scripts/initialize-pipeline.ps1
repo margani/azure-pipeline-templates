@@ -4,6 +4,9 @@ param (
     [Parameter()][String]$Environment
 )
 
+$scriptPath = Split-Path -parent $MyInvocation.MyCommand.Path
+Import-Module "$scriptPath\helpers.psm1"
+
 Function Initialize-Pipeline {
     [CmdletBinding()]
     param (
@@ -24,9 +27,9 @@ Function Initialize-Pipeline {
                 $envs.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
                 | ForEach-Object {
                     $env = $_.Trim()
-                    Write-Output "##vso[task.setvariable variable=env-$env-subscription]$subscription"
+                    Write-Output "##vso[task.setvariable variable=$(Get-EnvSubscriptionVarName($env))]$subscription"
                     if ($env -eq $Environment) {
-                        Write-Output "##vso[task.setvariable variable=envSubscription]$subscription"
+                        Write-Output "##vso[task.setvariable variable=$(Get-EnvSubscriptionVarName)]$subscription"
                     }
                 }
             }
