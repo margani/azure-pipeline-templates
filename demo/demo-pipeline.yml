@@ -32,11 +32,13 @@ resources:
       ref: refs/heads/poc
 
 variables:
-  - template: global/naming.yml@variables
+  - template: naming.yml@variables
+  - template: product.yml@variables
+    parameters:
+      productName: My First Demo Product
+  - template: env.yml@variables
     parameters:
       env: ${{ parameters.env }}
-      productName: My First Demo Product
-
 stages:
   - stage: DemoStage1
     condition: eq('${{ parameters.env }}', 'ci')
@@ -62,9 +64,11 @@ stages:
       - job: DemoJob12
         dependsOn: DemoJob11
         variables:
-          - template: global/naming.yml@variables
+          - template: env.yml@variables
             parameters:
               env: a1
+          - template: product.yml@variables
+            parameters:
               productName: My Second Demo Product
         steps:
           - template: tests/display-env.yml@templates
@@ -83,9 +87,11 @@ stages:
         dependsOn: DemoJob12
         condition: eq('${{ parameters.env }}', 'ci')
         variables:
-          - template: global/naming.yml@variables
+          - template: env.yml@variables
             parameters:
               env: t3
+          - template: product.yml@variables
+            parameters:
               productName: My Third Demo Product
         steps:
           - template: tests/display-env.yml@templates
