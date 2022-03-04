@@ -47,7 +47,7 @@ stages:
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: ../pipeline/initialize-pipeline.yml
+          - template: pipeline/initialize-pipeline.yml@templates
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: functions/new-function.yml@templates
@@ -73,7 +73,7 @@ stages:
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: ../pipeline/initialize-pipeline.yml
+          - template: pipeline/initialize-pipeline.yml@templates
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: functions/new-function.yml@templates
@@ -96,7 +96,7 @@ stages:
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: ../pipeline/initialize-pipeline.yml
+          - template: pipeline/initialize-pipeline.yml@templates
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: functions/new-function.yml@templates
@@ -114,7 +114,7 @@ stages:
         steps:
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
-          - template: ../pipeline/initialize-pipeline.yml
+          - template: pipeline/initialize-pipeline.yml@templates
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: functions/new-function.yml@templates
