@@ -4,6 +4,6 @@ steps:
     inputs:
       filePath: azure-pipeline-templates/functions/scripts/new-function.ps1
       arguments: -EnvSubscriptions "$(varSubscriptions)"
-        -EnvSubscription $(envSubscription)
+        -EnvSubscription $env:env-subscription
         -Product "$(productName)"
       pwsh: true
