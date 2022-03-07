@@ -16,6 +16,7 @@ steps:
   - checkout: self
     path: ${{ parameters.selfRepoCheckoutFolderName }}
   - checkout: ${{ parameters.templatesRepoResourceName }}
+    path: ${{ parameters.templatesRepoResourceName }}
   - task: PowerShell@2
     displayName: Initialize Pipeline
     inputs:
