@@ -5,12 +5,16 @@ parameters:
   - name: varSubscriptions
     type: string
     default: $(varSubscriptions)
+  - name: selfRepoCheckoutFolderName
+    type: string
+    default: 'product'
   - name: templatesRepoResourceName
     type: string
     default: 'templates'
 
 steps:
   - checkout: self
+    path: ${{ parameters.selfRepoCheckoutFolderName }}
   - checkout: ${{ parameters.templatesRepoResourceName }}
   - task: PowerShell@2
     displayName: Initialize Pipeline
