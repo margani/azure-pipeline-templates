@@ -1,11 +1,17 @@
+parameters:
+  - name: env
+    type: string
+    default: $(env)
+  - name: varSubscriptions
+    type: string
+    default: $(varSubscriptions)
+
 steps:
   - checkout: self
-  - checkout: templates
-  - checkout: variables
   - task: PowerShell@2
     displayName: Initialize Pipeline
     inputs:
       filePath: azure-pipeline-templates/pipeline/scripts/initialize-pipeline.ps1
-      arguments: -EnvSubscriptions "$(varSubscriptions)"
-        -Environment $(env)
+      arguments: -VarSubscriptions "${{ parameters.varSubscriptions }}"
+        -Environment "${{ parameters.env }}"
       pwsh: true

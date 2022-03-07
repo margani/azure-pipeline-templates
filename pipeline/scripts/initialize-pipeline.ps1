@@ -1,42 +1,12 @@
 ﻿[CmdletBinding()]
 param (
-    [Parameter()][String]$EnvSubscriptions,
+    [Parameter()][String]$VarSubscriptions,
     [Parameter()][String]$Environment
 )
 
 $scriptPath = Split-Path -parent $MyInvocation.MyCommand.Path
 Import-Module "$scriptPath\helpers.psm1"
 
-Function Initialize-Pipeline {
-    [CmdletBinding()]
-    param (
-        [Parameter()][String]$EnvSubscriptions,
-        [Parameter()][String]$Environment
-    )
-    Process {
-        Write-Host "EnvSubscriptions: $EnvSubscriptions"
-
-        $EnvSubscriptions.Split(';', [System.StringSplitOptions]::RemoveEmptyEntries)
-        | ForEach-Object {
-            $envSubscription = $_
-            $keyValue = $envSubscription.Split(':', [System.StringSplitOptions]::RemoveEmptyEntries)
-            if ($keyValue.Length -eq 2) {
-                $envs = $keyValue[0]
-                $subscription = $keyValue[1].Trim()
-
-                $envs.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
-                | ForEach-Object {
-                    $env = $_.Trim()
-                    Write-Output "##vso[task.setvariable variable=$(Get-EnvSubscriptionVarName($env))]$subscription"
-                    if ($env -eq $Environment) {
-                        Write-Output "##vso[task.setvariable variable=$(Get-EnvSubscriptionVarName)]$subscription"
-                    }
-                }
-            }
-        }
-    }
-}
-
 Initialize-Pipeline `
-    -EnvSubscriptions $EnvSubscriptions `
-    -Environment $Environment
+    -VarSubscriptions "$VarSubscriptions" `
+    -Environment "$Environment"

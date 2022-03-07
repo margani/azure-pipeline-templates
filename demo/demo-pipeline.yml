@@ -45,6 +45,7 @@ stages:
     jobs:
       - job: DemoJob11
         steps:
+          - checkout: self
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: pipeline/initialize-pipeline.yml@templates
@@ -71,6 +72,7 @@ stages:
             parameters:
               productName: My Second Demo Product
         steps:
+          - checkout: self
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: pipeline/initialize-pipeline.yml@templates
@@ -94,6 +96,7 @@ stages:
             parameters:
               productName: My Third Demo Product
         steps:
+          - checkout: self
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: pipeline/initialize-pipeline.yml@templates
@@ -112,6 +115,7 @@ stages:
       - job: DemoJob21
         condition: succeeded()
         steps:
+          - checkout: self
           - template: tests/display-env.yml@templates
           - template: tests/display-files.yml@templates
           - template: pipeline/initialize-pipeline.yml@templates
