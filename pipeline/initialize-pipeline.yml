@@ -5,9 +5,17 @@ parameters:
   - name: varSubscriptions
     type: string
     default: $(varSubscriptions)
+  - name: templatesRepoName
+    type: string
+    default: 'templates'
+  - name: variablesRepoName
+    type: string
+    default: 'variables'
 
 steps:
   - checkout: self
+  - checkout: ${{ parameters.templatesRepoName }}
+  - checkout: ${{ parameters.variablesRepoName }}
   - task: PowerShell@2
     displayName: Initialize Pipeline
     inputs:
