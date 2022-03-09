@@ -53,16 +53,25 @@ Function Get-PipelineValues() {
 
 Function Initialize-Pipeline(
     $VarSubscriptions,
-    $Environment
+    $Environment,
+    $ProductCheckoutFolderName,
+    $TemplatesCheckoutFolderName
 ) {
     $envSubscriptions = Get-EnvSubscriptions $VarSubscriptions
     $envSubscriptions.Keys | ForEach-Object {
         $env = $_
         $subscriptionName = $envSubscriptions[$_]
 
-        Add-PipelineVariable -Name Get-EnvSubscriptionVarName($env) -Value $subscriptionName
+        Add-PipelineVariable -Name $(Get-EnvSubscriptionVarName($env)) -Value $subscriptionName
         if ($env -eq $Environment) {
-            Add-PipelineVariable -Name Get-EnvSubscriptionVarName -Value $subscriptionName
+            Add-PipelineVariable -Name $(Get-EnvSubscriptionVarName) -Value $subscriptionName
         }
     }
+
+    Add-PipelineVariable -Name "ProductCheckoutFolderName" -Value $ProductCheckoutFolderName
+    Add-PipelineVariable -Name "TemplatesCheckoutFolderName" -Value $TemplatesCheckoutFolderName
+
+    $PipelineWorkspace = Get-EnvVar("Pipeline_Workspace")
+    Add-PipelineVariable -Name "ProductCheckoutFolderPath" -Value $(Join-Path -Path $PipelineWorkspace -ChildPath $ProductCheckoutFolderName)
+    Add-PipelineVariable -Name "TemplatesCheckoutFolderPath" -Value $(Join-Path -Path $PipelineWorkspace -ChildPath $TemplatesCheckoutFolderName)
 }

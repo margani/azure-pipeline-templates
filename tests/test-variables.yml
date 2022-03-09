@@ -7,6 +7,6 @@ steps:
     - task: PowerShell@2
       displayName: Test Variable [${{ expectation.key }}]
       inputs:
-        filePath: azure-pipeline-templates/tests/scripts/test-variables.ps1
+        filePath: $(TemplatesCheckoutFolderPath)/tests/scripts/test-variables.ps1
         arguments: -Name "${{ expectation.key }}" -Expected "${{ expectation.value }}" -Actual "$(${{ expectation.key }})"
         pwsh: true

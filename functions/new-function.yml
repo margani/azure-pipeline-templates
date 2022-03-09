@@ -2,7 +2,7 @@ steps:
   - task: PowerShell@2
     displayName: New function
     inputs:
-      filePath: azure-pipeline-templates/functions/scripts/new-function.ps1
+      filePath: $(TemplatesCheckoutFolderPath)/functions/scripts/new-function.ps1
       arguments: -EnvSubscriptions "$(varSubscriptions)"
         -EnvSubscription $env:env-subscription
         -Product "$(productName)"

@@ -5,22 +5,24 @@ parameters:
   - name: varSubscriptions
     type: string
     default: $(varSubscriptions)
-  - name: selfRepoCheckoutFolderName
+  - name: productCheckoutFolderName
     type: string
     default: 'product'
-  - name: templatesRepoResourceName
+  - name: templatesCheckoutFolderName
     type: string
     default: 'templates'
 
 steps:
   - checkout: self
-    path: ${{ parameters.selfRepoCheckoutFolderName }}
-  - checkout: ${{ parameters.templatesRepoResourceName }}
-    path: ${{ parameters.templatesRepoResourceName }}
+    path: ${{ parameters.productCheckoutFolderName }}
+  - checkout: ${{ parameters.templatesCheckoutFolderName }}
+    path: ${{ parameters.templatesCheckoutFolderName }}
   - task: PowerShell@2
     displayName: Initialize Pipeline
     inputs:
-      filePath: azure-pipeline-templates/pipeline/scripts/initialize-pipeline.ps1
+      filePath: $(Pipeline.Workspace)/${{ parameters.templatesCheckoutFolderName }}/pipeline/scripts/initialize-pipeline.ps1
       arguments: -VarSubscriptions "${{ parameters.varSubscriptions }}"
         -Environment "${{ parameters.env }}"
+        -ProductCheckoutFolderName "${{ parameters.productCheckoutFolderName }}"
+        -TemplatesCheckoutFolderName "${{ parameters.templatesCheckoutFolderName }}"
       pwsh: true
