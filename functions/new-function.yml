@@ -4,6 +4,6 @@ steps:
     inputs:
       filePath: $(TemplatesCheckoutFolderPath)/functions/scripts/new-function.ps1
       arguments: -EnvSubscriptions "$(varSubscriptions)"
-        -EnvSubscription $env:env-subscription
+        -EnvSubscription "$(varEnvSubscription)"
         -Product "$(productName)"
       pwsh: true
