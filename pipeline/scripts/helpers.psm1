@@ -54,12 +54,12 @@ Function Get-PipelineValues() {
 }
 
 Function Initialize-Pipeline(
-    $VarSubscriptions,
+    $Subscriptions,
     $Environment,
     $ProductCheckoutFolderName,
     $TemplatesCheckoutFolderName
 ) {
-    $envSubscriptions = Get-EnvSubscriptions $VarSubscriptions
+    $envSubscriptions = Get-EnvSubscriptions $Subscriptions
     $envSubscriptions.Keys | ForEach-Object {
         $env = $_
         $subscriptionName = $envSubscriptions[$_]
