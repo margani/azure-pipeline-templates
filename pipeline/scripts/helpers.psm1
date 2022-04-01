@@ -2,7 +2,7 @@
 
 Function Get-EnvSubscriptionVarName($Env) {
     if ($Env) {
-        return "$($variablesPrefix)env($Env)subscription"
+        return "$($variablesPrefix)env$($Env)subscription"
     }
     return "$($variablesPrefix)envsubscription"
 }
