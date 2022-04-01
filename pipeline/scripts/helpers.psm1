@@ -11,6 +11,10 @@ Function Get-EnvVar($VariableName) {
     return Get-ChildItem "Env:$($VariableName)*" | Where-Object { $_.Name -eq $VariableName } | Select-Object -ExpandProperty Value
 }
 
+Function Get-EnvVars() {
+    return Get-ChildItem "Env:$($variablesPrefix)*"
+}
+
 Function Get-EnvSubscriptions($EnvSubscriptionsString) {
     $envSubscriptions = @{}
     $EnvSubscriptionsString.Split(';', [System.StringSplitOptions]::RemoveEmptyEntries)
@@ -37,15 +41,15 @@ Function Add-PipelineVariable($Name, $Value) {
 }
 
 Function Get-PipelineValues() {
-    $env = Get-EnvVar("env")
-    $envSubscriptionVarName = Get-EnvSubscriptionVarName($env)
-    $envA1SubscriptionVarName = Get-EnvSubscriptionVarName("a1")
+    $pipelineVariables = Get-EnvVars
 
     $pipelineValues = @{
-        EnvSubscriptions3  = Get-EnvVar("varSubscriptions")
-        EnvSubscription3   = Get-EnvVar($envSubscriptionVarName)
-        A1EnvSubscription3 = Get-EnvVar($envA1SubscriptionVarName)
-        ProductName3       = Get-EnvVar("productName")
+        Env         = Get-EnvVar("env")
+        ProductName = Get-EnvVar("productName")
+    }
+
+    $pipelineVariables | ForEach-Object {
+        $pipelineValues.Add($_.Name, $_.Value)
     }
 
     return $pipelineValues
