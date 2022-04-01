@@ -24,9 +24,9 @@ Function New-Function {
         $pipelineValues = Get-PipelineValues
         Write-Host "Env: [$($pipelineValues.Env)]"
         Write-Host "ProductName: [$($pipelineValues.ProductName)]"
-        Write-Host "EnvSubscriptions: [$($pipelineValues.VarEnvSubscriptions)]"
-        Write-Host "EnvSubscription: [$($pipelineValues.VarEnvSubscription)]"
-        Write-Host "VarA1EnvSubscription: [$($pipelineValues.VarA1EnvSubscription)]"
+        Write-Host "VarSubscriptions: [$($pipelineValues.VarSubscriptions)]"
+        Write-Host "VarEnvSubscription: [$($pipelineValues.VarEnvSubscription)]"
+        Write-Host "VarEnvA1Subscription: [$($pipelineValues.VarEnvA1Subscription)]"
     }
 }
 

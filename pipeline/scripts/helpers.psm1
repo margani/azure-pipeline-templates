@@ -41,14 +41,12 @@ Function Add-PipelineVariable($Name, $Value) {
 }
 
 Function Get-PipelineValues() {
-    $pipelineVariables = Get-EnvVars
-
     $pipelineValues = @{
         Env         = Get-EnvVar("env")
         ProductName = Get-EnvVar("productName")
     }
 
-    $pipelineVariables | ForEach-Object {
+    Get-EnvVars | ForEach-Object {
         $pipelineValues.Add($_.Name, $_.Value)
     }
 
